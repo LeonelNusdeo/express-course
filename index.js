@@ -2,32 +2,15 @@ const express = require('express');
 
 const app = express();
 
-app.get('/', (req, res) => {
-	res.send('Hello world')
-})
+// Es importante que app.use este ANTES de que llegue a la ruta
+app.use(express.text());
+app.use(express.json());
+app.use(express.urlencoded({extended: false}));
 
-app.get('/miarchivo', (req, res) => {
-	res.sendFile('./javascript.png', {
-		root: __dirname
-	})
-})
-
-app.get('/user', (req, res) => {
-	res.json({
-		"name": "leonel",
-		"lastname": "nusdeo",
-		"age": 40,
-		"points": [1, 2, 3],
-		"address": {
-			"city": "Capital Federal",
-			"street": "Calle"
-		}
-	})
-})
-
-app.get('/isAlive', (req, res) => {
-	res.sendStatus(204)
-})
+app.post('/user', (req, res) => {
+	console.log(req.body);
+	res.send('Nuevo usuario creado')
+});
 
 app.listen(3000);
 console.log(`Server on port ${3000}`);
