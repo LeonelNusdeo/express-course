@@ -2,28 +2,8 @@ const express = require('express');
 
 const app = express();
 
-
-// http://localhost:3000/search?q=javascript%20books
-// Terminal: { q: 'javascript books' }
-
-// http://localhost:3000/search?user=leonel&user=marcos&user=pedro
-// Terminal: { user: [ 'leonel', 'marcos', 'pedro' ] }
-// crea un ARRAY con los distintos valores, si el nombre de la variable es repetida
-app.get('/search', (req, res) => {
-	console.log(req.query);
-	if (req.query.q === 'javascript books') {
-		res.send('lista de libros de javascript')
-	} else {
-		res.send('pagina normal')
-	}
-})
-
-// http://localhost:3000/hello/leonel?user=leonel&age=40
-// { user: 'leonel', age: '40' }
 app.get('/hello/:username', (req, res) => {
-	console.log(req.query);
-	console.log(req.query.user);
-	console.log(req.query.age);
+	console.log(typeof req.params.username);
 	res.send(`Hello ${req.params.username.toUpperCase()}`)
 })
 
