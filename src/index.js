@@ -1,16 +1,18 @@
 const express = require('express');
 const morgan = require('morgan');
+const path = require('path');
 
 const app = express();
 
 // Settings
 app.set('case sensitive routing', true);
 app.set('appName', 'Express Course');
-app.set('port', 4000);
+app.set('port', 3000);
 
 // Middlewares
 app.use(express.json());
 app.use(morgan('dev'));
+
 
 // Routes
 app.get('/username', (req, res) => {
@@ -40,6 +42,10 @@ app.all('/about', (req, res) => {
 app.get('/dashboard', (req, res) => {
 	res.send('Dashboard page')
 })
+
+// Va al final para que acceda SI NO encontro ninguna ruta
+app.use("/public", express.static(path.join(__dirname, 'public')));
+app.use("/uploads", express.static(path.join(__dirname,'./uploads')));
 
 app.listen(app.get('port'));
 console.log(`Server ${app.get('appName')} on port ${app.get('port')}`);
