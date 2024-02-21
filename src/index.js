@@ -1,6 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
+require('ejs');
 
 const app = express();
 
@@ -11,11 +12,12 @@ const userRoutes = require ('./routes/users');
 app.set('case sensitive routing', true);
 app.set('appName', 'Express Course');
 app.set('port', 3000);
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
 // Middlewares
 app.use(express.json());
 app.use(morgan('dev'));
-
 // Ya no uso funciones para dividir archivos
 // (se los paso a Express como middleware)
 // los modulos se acoplan a la aplicacion principal
