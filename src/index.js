@@ -4,6 +4,9 @@ const path = require('path');
 
 const app = express();
 
+const homeRoutes = require ('./routes/home');
+const userRoutes = require ('./routes/users');
+
 // Settings
 app.set('case sensitive routing', true);
 app.set('appName', 'Express Course');
@@ -13,39 +16,21 @@ app.set('port', 3000);
 app.use(express.json());
 app.use(morgan('dev'));
 
+// Ya no uso funciones para dividir archivos
+// (se los paso a Express como middleware)
+// los modulos se acoplan a la aplicacion principal
+app.use(homeRoutes);
+app.use(userRoutes);
+
+// Forma de dividir la aplicacion en archivos via NodeJS
+// (llamo a las funciones)
+// homeRoutes(app);
+// userRoutes(app);
 
 // Routes
-app.get('/username', (req, res) => {
-	res.send('Username route')
-})
-
-app.get('/profile', (req, res) => {
-	console.log(req.body);
-	res.send('profile page')
-})
-
-app.all('/about', (req, res) => {
-	res.send('about page')
-})
-
-// El orden IMPORTA. Si este middleware estuviera arriba de todo
-// en todas las rutas se validaria login
-// Asi se requiere solo en /dashboard pero no en /profile ni /about
-// app.use((req, res, next) => {
-// 	if (req.query.login === 'leonel@mail.com') {
-// 		next()
-// 	} else {
-// 		res.send('No autorizado')
-// 	}
-// })
-
-app.get('/dashboard', (req, res) => {
-	res.send('Dashboard page')
-})
-
 // Va al final para que acceda SI NO encontro ninguna ruta
 app.use("/public", express.static(path.join(__dirname, 'public')));
-app.use("/uploads", express.static(path.join(__dirname,'./uploads')));
+app.use("/uploads", express.static(path.join(__dirname,'uploads')));
 
 app.listen(app.get('port'));
 console.log(`Server ${app.get('appName')} on port ${app.get('port')}`);
