@@ -5,8 +5,24 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/', (req, res) => {
+	let isActive = true;
+	const users = [
+		{
+			id: 1,
+			name: "Ryan",
+			lastname: "Perez"
+		},
+		{
+			id: 2,
+			name: "Joe",
+			lastname: "Smith"
+		}
+	]
+
 	res.render('index', {
-		title: 'Index page'
+		title: 'Index page',
+		isActive,
+		users
 	})
 });
 
