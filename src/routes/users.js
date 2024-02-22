@@ -4,13 +4,8 @@ const express = require('express');
 
 const router = express.Router();
 
-router.get('/username', (req, res) => {
-	res.send('Username route')
-});
-
-router.get('/profile', (req, res) => {
-	console.log(req.body);
-	res.send('profile page')
+router.get('/users', (req, res) => {
+	res.render('users')
 });
 
 module.exports = router;
