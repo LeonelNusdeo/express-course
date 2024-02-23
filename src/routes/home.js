@@ -1,6 +1,7 @@
 // Es lo mismo que abajo (via NodeJS) solo que no necesito
 // que esten adentro de una funcion
 const express = require('express');
+const axios = require('axios');
 
 const router = express.Router();
 
@@ -28,6 +29,17 @@ router.get('/', (req, res) => {
 
 router.get('/about', (req, res) => {
 	res.render('about')
+});
+
+router.get('/posts', async (req, res) => {
+	const response = await axios.get(
+		'https://jsonplaceholder.typicode.com/posts'
+	);
+	// console.log(response);
+	// Dentro de todo que recibo (lo vi por Terminal), esta el array "data"
+	res.render('posts', {
+		posts: response.data
+	})
 });
 
 router.get('/dashboard', (req, res) => {
